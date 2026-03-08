@@ -1,9 +1,14 @@
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { resolve } from 'path';
+import { homedir } from 'os';
 
 const workspaceRoot = resolve(import.meta.dirname, '..', '..');
 const configDir = resolve(workspaceRoot, 'config');
 const scriptsDir = resolve(workspaceRoot, 'scripts');
+
+// Use the same registry location as swarm scripts
+const SWARM_ROOT = process.env.SWARM_ROOT || resolve(homedir(), '.agent-swarm');
+const TASK_REGISTRY_PATH = resolve(SWARM_ROOT, 'active-tasks.json');
 
 interface DiscordCredentials {
   botToken: string;
@@ -26,7 +31,7 @@ interface Task {
   branch: string;
   baseBranch: string;
   startedAt: number;
-  status: 'running' | 'completed' | 'failed' | 'paused' | 'reviewing';
+  status: 'running' | 'completed' | 'failed' | 'paused' | 'reviewing' | 'spawning';
   attempt: number;
   maxAttempts: number;
   notifyOnComplete: boolean;
@@ -56,7 +61,7 @@ interface Task {
 interface TaskRegistry {
   tasks: Task[];
   lastUpdated: string;
-  stats: {
+  stats?: {
     totalTasks: number;
     runningTasks: number;
     completedToday: number;
@@ -71,9 +76,32 @@ export function loadDiscordCredentials(): DiscordCredentials {
 }
 
 export function loadTaskRegistry(): TaskRegistry {
-  const registryPath = resolve(configDir, 'active-tasks.json');
-  const content = readFileSync(registryPath, 'utf-8');
+  // Ensure directory exists
+  if (!existsSync(SWARM_ROOT)) {
+    mkdirSync(SWARM_ROOT, { recursive: true });
+  }
+  
+  // Create empty registry if doesn't exist
+  if (!existsSync(TASK_REGISTRY_PATH)) {
+    const emptyRegistry: TaskRegistry = {
+      tasks: [],
+      lastUpdated: new Date().toISOString(),
+    };
+    return emptyRegistry;
+  }
+  
+  const content = readFileSync(TASK_REGISTRY_PATH, 'utf-8');
   return JSON.parse(content);
+}
+
+export function saveTaskRegistry(registry: TaskRegistry): void {
+  // Ensure directory exists
+  if (!existsSync(SWARM_ROOT)) {
+    mkdirSync(SWARM_ROOT, { recursive: true });
+  }
+  
+  registry.lastUpdated = new Date().toISOString();
+  writeFileSync(TASK_REGISTRY_PATH, JSON.stringify(registry, null, 2), 'utf-8');
 }
 
 export function getScriptsDir(): string {
