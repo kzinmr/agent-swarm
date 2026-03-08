@@ -1,0 +1,21 @@
+{
+  "name": "agent-swarm-discord",
+  "version": "1.0.0",
+  "description": "Discord bot for agent swarm orchestration",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts",
+    "register-commands": "tsx src/register-commands.ts"
+  },
+  "dependencies": {
+    "discord.js": "^14.14.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0"
+  }
+}

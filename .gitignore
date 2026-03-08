@@ -1,0 +1,32 @@
+# Sensitive credentials - NEVER commit these
+*.secret
+*.key
+.env
+.env.*
+discord.credentials.json
+secrets/
+
+# Task registry (runtime state)
+config/active-tasks.json
+
+# OS files
+.DS_Store
+*.swp
+*~
+
+# Node
+node_modules/
+discord/node_modules/
+discord/dist/
+
+# Logs
+*.log
+
+# OpenClaw
+.openclaw/
+AGENTS.md
+HEARTBEAT.md
+IDENTITY.md
+SOUL.md
+TOOLS.md
+USER.md

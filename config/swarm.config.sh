@@ -1,7 +1,7 @@
 #!/bin/bash
 # =============================================================================
 # Agent Swarm Configuration
- =============================================================================
+# =============================================================================
 # This config should work on any environment with OpenClaw, OpenCode, and
 # Alibaba Cloud Model Studio (or other LLM providers) set up.
 
