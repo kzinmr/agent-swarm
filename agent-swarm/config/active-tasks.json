@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "Agent Swarm Task Registry - Tracks all active and completed agent tasks",
+  "tasks": [
+    {
+      "id": "example-feature",
+      "tmuxSession": "agent-example-feature",
+      "agent": "opencode",
+      "model": "qwen-coder-plus",
+      "description": "Example feature implementation",
+      "repo": "my-project",
+      "repoPath": "/Users/username/projects/my-project",
+      "worktree": "feat-example-feature",
+      "worktreePath": "/Users/username/worktrees/feat-example-feature",
+      "branch": "feat/example-feature",
+      "baseBranch": "main",
+      "startedAt": 1709942400000,
+      "status": "running",
+      "attempt": 1,
+      "maxAttempts": 3,
+      "notifyOnComplete": true,
+      "priority": "normal",
+      "tags": ["feature", "backend"],
+      "prompt": "Implement the example feature...",
+      "context": {
+        "customerRequest": false,
+        "relatedFiles": ["src/example.ts"],
+        "meetingNotes": null
+      },
+      "checks": {
+        "prCreated": false,
+        "prNumber": null,
+        "ciPassed": null,
+        "reviews": {
+          "opencode": null,
+          "gemini": null,
+          "claude": null
+        },
+        "screenshotIncluded": null
+      },
+      "completedAt": null,
+      "note": null
+    }
+  ],
+  "lastUpdated": "2025-03-09T03:10:00+09:00",
+  "stats": {
+    "totalTasks": 0,
+    "runningTasks": 0,
+    "completedToday": 0,
+    "failedToday": 0
+  }
+}
